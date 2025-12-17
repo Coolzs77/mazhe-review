@@ -1,15 +1,63 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>马哲16大原理 · 终极复习</title>
     <style>
-        /* --- Tailwind CSS Utilities (Inline for offline usage) --- */
+        :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --card-sub: #f9fafb;
+            --border: #e5e7eb;
+            --text: #1e293b;
+            --text-2: #4b5563;
+            --muted: #9ca3af;
+            --muted-2: #d1d5db;
+            --primary: #4f46e5;
+            --primary-2: #2563eb;
+            --success: #10b981;
+            --danger: #dc2626;
+            --amber-bg: #fef3c7;
+            --amber-border: #fcd34d;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);
+            --glass: rgba(255,255,255,0.9);
+            --badge-danger-bg: #fef2f2;
+            --badge-danger-text: #dc2626;
+            --plate-blue: #2563eb;
+            --plate-green: #059669;
+            --plate-purple: #7c3aed;
+        }
+        [data-theme="dark"] {
+            --bg: #0b1220;
+            --card: #0f172a;
+            --card-sub: #0b1325;
+            --border: #1f2a3d;
+            --text: #e2e8f0;
+            --text-2: #cbd5e1;
+            --muted: #94a3b8;
+            --muted-2: #475569;
+            --primary: #8b5cf6;
+            --primary-2: #60a5fa;
+            --success: #34d399;
+            --danger: #f87171;
+            --amber-bg: rgba(251,191,36,0.15);
+            --amber-border: #fbbf24;
+            --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 30px -8px rgba(0,0,0,0.6),0 4px 10px -6px rgba(0,0,0,0.4);
+            --glass: rgba(15,23,42,0.8);
+            --badge-danger-bg: rgba(248,113,113,0.15);
+            --badge-danger-text: #fca5a5;
+            --plate-blue: #1d4ed8;
+            --plate-green: #10b981;
+            --plate-purple: #a855f7;
+        }
+
         *, *::before, *::after { box-sizing: border-box; }
-        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-font-smoothing: antialiased; }
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
         button { cursor: pointer; border: none; background: none; padding: 0; font: inherit; color: inherit; }
-        
+
         /* Layout */
         .flex { display: flex; }
         .flex-col { flex-direction: column; }
@@ -23,7 +71,7 @@
         .gap-4 { gap: 1rem; }
         .shrink-0 { flex-shrink: 0; }
         .min-w-0 { min-width: 0; }
-        
+
         /* Spacing */
         .p-0\.5 { padding: 0.125rem; }
         .p-1 { padding: 0.25rem; }
@@ -46,7 +94,7 @@
         .mb-3 { margin-bottom: 0.75rem; }
         .ml-0\.5 { margin-left: 0.125rem; }
         .pl-2\.5 { padding-left: 0.625rem; }
-        
+
         /* Sizing */
         .w-full { width: 100%; }
         .h-full { height: 100%; }
@@ -64,7 +112,7 @@
         .h-px { height: 1px; }
         .w-1 { width: 0.25rem; }
         .h-3 { height: 0.75rem; }
-        
+
         /* Text */
         .text-xs { font-size: 0.75rem; line-height: 1rem; }
         .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
@@ -72,61 +120,37 @@
         .font-bold { font-weight: 700; }
         .font-medium { font-weight: 500; }
         .text-white { color: #ffffff; }
-        .text-gray-300 { color: #d1d5db; }
-        .text-gray-400 { color: #9ca3af; }
-        .text-gray-500 { color: #6b7280; }
-        .text-gray-600 { color: #4b5563; }
-        .text-gray-800 { color: #1f2937; }
-        .text-gray-900 { color: #111827; }
-        .text-blue-700 { color: #1d4ed8; }
-        .text-emerald-500 { color: #10b981; }
-        .text-emerald-700 { color: #047857; }
-        .text-purple-700 { color: #7e22ce; }
-        .text-red-600 { color: #dc2626; }
-        .text-indigo-700 { color: #4338ca; }
-        .text-amber-700 { color: #b45309; }
-        .text-transparent { color: transparent; }
+        .text-muted { color: var(--muted); }
+        .text-muted-2 { color: var(--muted-2); }
+        .text-danger { color: var(--danger); }
+        .text-primary { color: var(--primary); }
+        .text-success { color: var(--success); }
         .whitespace-pre-wrap { white-space: pre-wrap; }
         .line-through { text-decoration: line-through; }
-        .decoration-gray-300 { text-decoration-color: #d1d5db; }
-        
+        .decoration-muted { text-decoration-color: var(--muted-2); }
+
         /* Visuals */
-        .bg-white { background-color: #ffffff; }
-        .bg-white\/20 { background-color: rgba(255, 255, 255, 0.2); }
-        .bg-white\/90 { background-color: rgba(255, 255, 255, 0.9); }
-        .bg-slate-50 { background-color: #f8fafc; }
-        .bg-gray-50 { background-color: #f9fafb; }
-        .bg-gray-100 { background-color: #f3f4f6; }
-        .bg-gray-200 { background-color: #e5e7eb; }
-        .bg-blue-600 { background-color: #2563eb; }
-        .bg-blue-400 { background-color: #60a5fa; }
-        .bg-emerald-600 { background-color: #059669; }
-        .bg-emerald-500 { background-color: #10b981; }
-        .bg-emerald-400 { background-color: #34d399; }
-        .bg-emerald-50 { background-color: #ecfdf5; }
-        .bg-purple-600 { background-color: #7c3aed; }
-        .bg-purple-400 { background-color: #c084fc; }
-        .bg-indigo-600 { background-color: #4f46e5; }
-        .bg-red-50 { background-color: #fef2f2; }
-        .bg-amber-100 { background-color: #fef3c7; }
-        .bg-current { background-color: currentColor; }
-        
+        .bg-body { background-color: var(--bg); }
+        .bg-card { background-color: var(--card); }
+        .bg-card-sub { background-color: var(--card-sub); }
+        .bg-plate-blue { background-color: var(--plate-blue); }
+        .bg-plate-green { background-color: var(--plate-green); }
+        .bg-plate-purple { background-color: var(--plate-purple); }
+        .bg-glass { background-color: var(--glass); }
         .border { border-width: 1px; border-style: solid; }
         .border-b { border-bottom-width: 1px; border-bottom-style: solid; }
         .border-l-2 { border-left-width: 2px; border-left-style: solid; }
-        .border-gray-100 { border-color: #f3f4f6; }
-        .border-gray-200 { border-color: #e5e7eb; }
-        .border-red-100 { border-color: #fee2e2; }
-        .border-amber-300 { border-color: #fcd34d; }
-        
+        .border-default { border-color: var(--border); }
+        .border-amber { border-color: var(--amber-border); }
+
         .rounded { border-radius: 0.25rem; }
         .rounded-lg { border-radius: 0.5rem; }
         .rounded-xl { border-radius: 0.75rem; }
         .rounded-full { border-radius: 9999px; }
-        
-        .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
-        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
-        
+
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+
         /* Logic & Animation */
         .transition-all { transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
         .duration-500 { transition-duration: 500ms; }
@@ -140,10 +164,10 @@
         .opacity-50 { opacity: 0.5; }
         .opacity-80 { opacity: 0.8; }
         .grayscale-\[0\.5\] { filter: grayscale(0.5); }
-        
+
         /* Recitation */
         .recitation-hidden {
-            background-color: #e5e7eb;
+            background-color: var(--muted-2);
             color: transparent;
             border-radius: 2px;
             padding: 0 2px;
@@ -152,14 +176,14 @@
         }
         .recitation-hidden:hover, .recitation-hidden:active {
             background-color: transparent;
-            color: #dc2626;
+            color: var(--danger);
         }
         .keyword-highlight {
             font-weight: 700;
-            color: #dc2626;
+            color: var(--danger);
             margin: 0 2px;
         }
-        
+
         /* Sticky Header */
         .sticky { position: sticky; top: 0; z-index: 50; }
         .fixed { position: fixed; }
@@ -167,25 +191,22 @@
         .right-6 { right: 1.5rem; }
         .z-10 { z-index: 10; }
         .z-40 { z-index: 40; }
-        
+
         /* Fullscreen styles */
         .fullscreen-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             z-index: 9999;
-            background-color: #f8fafc;
+            background-color: var(--bg);
             overflow-y: auto;
         }
-        
+
         @media (max-width: 640px) {
             .hidden-mobile { display: none; }
         }
     </style>
 </head>
-<body>
+<body class="bg-body">
 
 <div id="app"></div>
 
@@ -199,26 +220,30 @@
 
     // --- Inline Icons (No external dependency) ---
     const Icons = {
-        BookOpen: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
-        ChevronRight: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="9 18 15 12 9 6"/></svg>,
-        ChevronDown: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="6 9 12 15 18 9"/></svg>,
-        CheckCircle2: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>,
-        Circle: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/></svg>,
-        Eye: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>,
-        EyeOff: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>,
-        Globe: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
-        Brain: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>,
-        Activity: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
-        Scale: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>,
-        GitBranch: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>,
-        Layers: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>,
-        RefreshCw: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>,
-        Search: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
-        Lightbulb: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-1 1.5-2.4 1.5-3.8 0-3.2-2.8-6-6.2-6-3.4 0-6 2.8-6 6 0 1.4.5 2.8 1.5 3.8.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>,
-        Zap: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
-        Cpu: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>,
-        Maximize: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>,
-        Minimize: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
+        BookOpen: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 21V7"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path><path d="M6 19a2 2 0 0 0-2-2"></path><path d="M18 19a2 2 0 0 1 2-2"></path></svg>,
+        ChevronRight: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="9 18 15 12 9 6"></polyline></svg>,
+        ChevronDown: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="6 9 12 15 18 9"></polyline></svg>,
+        CheckCircle2: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"></path><path d="m9 12 2 2 4-4"></path></svg>,
+        Circle: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"></circle></svg>,
+        Eye: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path><circle cx="12" cy="12" r="3"></circle></svg>,
+        EyeOff: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m9.88 9.88 4.24 4.24"></path><path d="M10.73 5.08A10.42 10.42 0 0 1 12 5c7 0 11 7 11 7a16.6 16.6 0 0 1-3.06 4.03"></path><path d="M6.61 6.61A16.6 16.6 0 0 0 1 12s4 7 11 7c1.37 0 2.67-.2 3.89-.56"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>,
+        Globe: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15 15 0 0 0 0 20"></path><path d="M12 2a15 15 0 0 1 0 20"></path></svg>,
+        Brain: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M15.5 4.5a3.5 3.5 0 0 0-4.95 0"></path><path d="M8 6a2 2 0 0 0-2 2v2.5"></path><path d="M13.5 20a3.5 3.5 0 0 0 4.95 0"></path><path d="M16 18a2 2 0 0 0 2-2v-2.5"></path><path d="M8 6a2 2 0 0 1-2-2"></path><path d="M16 18a2 2 0 0 1 2 2"></path><path d="M12 12v.01"></path><path d="M12 22v-4"></path><path d="M12 6V2"></path><path d="M10 13a2 2 0 1 1-4 0"></path><path d="M18 11a2 2 0 1 1-4 0"></path></svg>,
+        Activity: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>,
+        Scale: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 10h6L5.5 4 3 10Z"></path><path d="M15 10h6l-3-6-3 6Z"></path></svg>,
+        GitBranch: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M6 3v12"></path><path d="M18 15a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3"></path><circle cx="6" cy="18" r="3"></circle><circle cx="6" cy="3" r="3"></circle><circle cx="18" cy="6" r="3"></circle></svg>,
+        Layers: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>,
+        RefreshCw: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.13-3.36L23 10"></path><path d="M20.49 15a9 9 0 0 1-14.13 3.36L1 14"></path></svg>,
+        Search: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>,
+        Lightbulb: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 2a7 7 0 0 0-4 12.74V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.26A7 7 0 0 0 12 2Z"></path><line x1="9" y1="22" x2="15" y2="22"></line></svg>,
+        Zap: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
+        Cpu: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M9 2v2"></path><path d="M15 2v2"></path><path d="M9 20v2"></path><path d="M15 20v2"></path><path d="M2 9h2"></path><path d="M2 15h2"></path><path d="M20 9h2"></path><path d="M20 15h2"></path></svg>,
+        Maximize: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>,
+        Minimize: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="10" y1="14" x2="3" y2="21"></line></svg>,
+        LayersIcon: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>,
+        ZapOn: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
+        Sun: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>,
+        Moon: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"></path></svg>,
     };
 
     // --- Data Source ---
@@ -239,8 +264,8 @@
                         badge: '核心',
                         icon: 'Brain',
                         children: [
-                            { id: 'p1-1', topic: '辩证关系', detail: '① 尊重【客观规律】是正确发挥【主观能动性】的【前提】。\n② 只有发挥【主观能动性】，才能正确认识和利用【规律】。\n③ 【实践】是客观规律性与主观能动性【统一的基础】。' },
-                            { id: 'p1-2', topic: '发挥能动性的条件', detail: '① 前提：从【实际出发】。\n② 根本途径：【实践】。\n③ 依赖：一定的【物质条件】和【手段】。' }
+                            { id: 'p1-1', topic: '辩证关系', detail: '① 尊重【客观规律】是正确发挥【主观能动性】的【前提】。\n② 只有发挥【主观能动性】，才能正确认识和利用客观规律。\n③ 尊重规律与发挥能动性【统一】。' },
+                            { id: 'p1-2', topic: '发挥能动性的条件', detail: '① 前提：从【实际出发】。\n② 根本途径：【实践】。\n③ 依赖：一定的【物质条件】。' }
                         ]
                     },
                     {
@@ -249,8 +274,8 @@
                         badge: '总特征',
                         icon: 'Activity',
                         children: [
-                            { id: 'p2-1', topic: '普遍联系', detail: '① 含义：事物内部及之间【相互影响】、【相互制约】、【相互作用】。\n② 特点：【客观性】、【普遍性】、【条件性】。\n③ 方法论：人可以【创造条件】化不利为有利，但必须【尊重规律】。' },
-                            { id: 'p2-2', topic: '永恒发展', detail: '① 实质：【新事物】的产生和【旧事物】的灭亡。\n② 新事物：合乎【历史方向】、符合【人民利益】。\n③ 关系：【扬弃】（继承合理，克服消极）。' }
+                            { id: 'p2-1', topic: '普遍联系', detail: '① 含义：事物内部及之间【相互影响】、【相互制约】、【相互作用】。\n② 特点：【客观性】【普遍性】【多样性】。' },
+                            { id: 'p2-2', topic: '永恒发展', detail: '① 实质：【新事物】的产生和【旧事物】的灭亡。\n② 新事物：合乎【历史方向】、符合【人民利益】、有【强大生命力】。' }
                         ]
                     },
                     {
@@ -269,8 +294,8 @@
                         topic: '4. 矛盾普遍性与特殊性',
                         icon: 'GitBranch',
                         children: [
-                            { id: 'p4-1', topic: '辩证关系', detail: '① 普遍性（共性）【寓于】特殊性（个性）之中。\n② 个性【包含】共性。\n③ 任何事物是【共性】与【个性】的统一。' },
-                            { id: 'p4-2', topic: '方法论', detail: '① 【具体问题具体分析】（解决矛盾的【关键】）。\n② 坚持【两点论】与【重点论】的统一。\n③ 坚持【问题导向】。' }
+                            { id: 'p4-1', topic: '辩证关系', detail: '① 普遍性（共性）【寓于】特殊性（个性）之中。\n② 个性【包含】共性。\n③ 任何事物是【共性与个性的统一】。' },
+                            { id: 'p4-2', topic: '方法论', detail: '① 【具体问题具体分析】（解决矛盾的【关键】）。\n② 坚持【两点论】与【重点论】的统一。' }
                         ]
                     },
                     {
@@ -278,8 +303,8 @@
                         topic: '5. 量变和质变',
                         icon: 'Layers',
                         children: [
-                            { id: 'p5-1', topic: '辩证关系', detail: '① 量变是质变的【必要准备】。\n② 质变是量变的【必然结果】。\n③ 【相互渗透】。' },
-                            { id: 'p5-2', topic: '方法论', detail: '① 平时：注重【量的积累】。\n② 关键时：【抓住机遇】，促成质变。\n③ 【适度原则】：防止"过"或"不及"。' }
+                            { id: 'p5-1', topic: '辩证关系', detail: '① 量变是质变的【必要准备】。\n② 质变是量变的【必然结果】。\n③ 二者【相互渗透】。' },
+                            { id: 'p5-2', topic: '方法论', detail: '① 平时：注重【量的积累】。\n② 关键时：【抓住机遇】，促成质变。\n③ 【适度原则】：防止“越界”。' }
                         ]
                     },
                     {
@@ -287,7 +312,7 @@
                         topic: '6. 辩证否定观',
                         icon: 'RefreshCw',
                         children: [
-                            { id: 'p6-1', topic: '核心内容', detail: '① 实质：【扬弃】（既克服又保留）。\n② 态度：反对【肯定一切】或【否定一切】。\n③ 方法：在肯定中看到【否定】。' }
+                            { id: 'p6-1', topic: '核心内容', detail: '① 实质：【扬弃】（既克服又保留）。\n② 态度：反对【肯定一切】或【否定一切】。\n③ 方法：通过【自我批判】实现发展。' }
                         ]
                     },
                     {
@@ -346,7 +371,7 @@
                         topic: '11. 实践与认识的辩证运动',
                         icon: 'RefreshCw',
                         children: [
-                            { id: 'p11-1', topic: '规律', detail: '实践-认识-再实践-再认识，【无限发展】。主观与客观是【具体的】、【历史的】统一。' }
+                            { id: 'p11-1', topic: '规律', detail: '实践-认识-再实践-再认识，【无限发展】。主观与客观是【具体的】【历史的】统一。' }
                         ]
                     },
                     {
@@ -382,8 +407,8 @@
                         badge: '热点',
                         icon: 'GitBranch',
                         children: [
-                            { id: 'p14-1', topic: '守正与创新', detail: '① 守正：坚持【实事求是】、真理性认识。【前提】和【基础】。\n② 创新：坚持【解放思想】，发现新规律。【目的】和【路径】。\n③ 深刻揭示了"变"与"不变"、【继承与发展】的辩证统一。' },
-                            { id: 'p14-2', topic: '良性互动', detail: '① 实践创新为理论创新提供【动力源泉】。\n② 理论创新为实践创新提供【行动指南】。\n③ 二者【相互激发】、【共同促进】。' }
+                            { id: 'p14-1', topic: '守正与创新', detail: '① 守正：坚持【实事求是】、真理性认识。【前提】【基础】。\n② 创新：坚持【解放思想】、与时俱进。【动力】。\n③ 相互关系：守正是创新的【根基】；创新是守正的【路径】。' },
+                            { id: 'p14-2', topic: '良性互动', detail: '① 实践创新为理论创新提供【动力源泉】。\n② 理论创新为实践创新提供【行动指南】。\n③ 形成【螺旋上升】的互动。' }
                         ]
                     },
                     {
@@ -393,7 +418,7 @@
                         children: [
                             { id: 'p15-1', topic: '地位与基础', detail: '① 自然地理环境是人类生存发展的【永恒、必要条件】。\n② 自然是生活和生产的【自然基础】。' },
                             { id: 'p15-2', topic: '物质变换', detail: '应当合理调节人与自然之间的【物质变换】，在【最适合人类本性】的条件下进行。' },
-                            { id: 'p15-3', topic: '能动与平衡', detail: '① 人在自然面前是【能动】的，但不能脱离【自然规律】。\n② 人与自然是【生命共同体】，要保持【动态平衡】。' }
+                            { id: 'p15-3', topic: '能动与平衡', detail: '① 人在自然面前是【能动】的，但不能脱离【自然规律】。\n② 人与自然是【生命共同体】。' }
                         ]
                     },
                     {
@@ -401,9 +426,9 @@
                         topic: '16. 科学技术的社会作用',
                         icon: 'Cpu',
                         children: [
-                            { id: 'p16-1', topic: '双重作用', detail: '① 积极：【先进生产力】的重要标志。引起【生产方式】、【生活方式】、【思维方式】的变革。\n② 消极：在一定条件下可能带来消极后果（如生态、伦理问题）。' },
-                            { id: 'p16-2', topic: '影响与保障', detail: '① 科技作用受【社会制度】、利益关系（客观）及人们的观念（主观）的影响。\n② 正确运用首要是有合理的【社会制度】保障，始终坚持为【人类造福】。' },
-                            { id: 'p16-3', topic: '人工智能(AI)', detail: '① 态度：以【开放、客观】的态度观察和把握。\n② 对策：充分利用便利，加强对【不当应用风险】的研判和防范。\n③ 方向：引导和规范AI走向【有利于人类生存和发展】的方向。' }
+                            { id: 'p16-1', topic: '双重作用', detail: '① 积极：【先进生产力】的重要标志。引起【生产方式】【生活方式】【思维方式】的变化。\n② 消极：可能带来风险，需要规制。' },
+                            { id: 'p16-2', topic: '影响与保障', detail: '① 科技作用受【社会制度】、利益关系（客观）及人们观念（主观）的影响。\n② 需健全【制度保障】与【伦理规范】。' },
+                            { id: 'p16-3', topic: '人工智能(AI)', detail: '① 态度：以【开放、客观】的态度观察和把握。\n② 对策：充分利用便利，加强对【不当应用】的约束与治理。' }
                         ]
                     }
                 ]
@@ -424,6 +449,15 @@
         const [expandedKeys, setExpandedKeys] = useState(new Set(['plate1', 'p1']));
         const [completedKeys, setCompletedKeys] = useState(new Set());
         const [isFullscreen, setIsFullscreen] = useState(false);
+        const [theme, setTheme] = useState(() => {
+            const saved = localStorage.getItem('theme');
+            return saved || 'light';
+        });
+
+        useEffect(() => {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }, [theme]);
 
         const totalPrinciples = 16;
         const completedCount = Array.from(completedKeys).filter(k => k.startsWith('p') && k.length <= 3).length;
@@ -432,7 +466,6 @@
         // 全屏切换函数
         const toggleFullscreen = useCallback(() => {
             if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                // 进入全屏
                 const elem = document.documentElement;
                 if (elem.requestFullscreen) {
                     elem.requestFullscreen();
@@ -445,7 +478,6 @@
                 }
                 setIsFullscreen(true);
             } else {
-                // 退出全屏
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 } else if (document.webkitExitFullscreen) {
@@ -528,59 +560,71 @@
         };
 
         return (
-            <div className="min-h-screen bg-slate-50">
+            <div className="min-h-screen bg-body">
                 {/* Header */}
-                <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+                <header className="sticky top-0 z-50 bg-card border-b border-default shadow-sm">
                     <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="bg-indigo-600 p-1.5 rounded text-white shadow-sm">
+                            <div className="p-1.5 rounded text-white shadow-sm" style={{backgroundColor: 'var(--primary)'}}>
                                 <IconComponent name="BookOpen" className="w-5 h-5" />
                             </div>
                             <div>
-                                <h1 className="font-bold text-gray-900 leading-none text-base">马哲16大原理</h1>
+                                <h1 className="font-bold leading-none text-base" style={{color: 'var(--text)'}}>马哲16大原理</h1>
                                 <div className="flex items-center gap-2 mt-1">
-                                    <div className="h-1.5 w-20 bg-gray-100 rounded-full overflow-hidden">
-                                        <div className="h-full bg-emerald-500 duration-500 ease-out transition-all" style={{width: `${progress}%`}}></div>
+                                    <div className="h-1.5 w-20 bg-card-sub rounded-full overflow-hidden border border-default">
+                                        <div className="h-full" style={{backgroundColor: 'var(--success)', width: `${progress}%`, transition: 'width 0.3s ease'}}></div>
                                     </div>
-                                    <span className="text-xs text-gray-500 font-medium">{progress}% 已背</span>
+                                    <span className="text-xs font-medium text-muted">{progress}% 已背</span>
                                 </div>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-2">
-                            <div className="flex bg-gray-100 p-0.5 rounded-lg border border-gray-200">
+                            <div className="flex bg-card-sub p-0.5 rounded-lg border border-default">
                                 <button 
                                     onClick={() => setContentMode('simple')}
-                                    className={`px-2 py-1.5 rounded text-xs font-bold transition-all ${contentMode === 'simple' ? 'bg-white text-indigo-700 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
+                                    className={`px-2 py-1.5 rounded text-xs font-bold transition-all ${contentMode === 'simple' ? 'shadow-sm' : ''}`}
+                                    style={contentMode === 'simple' ? {backgroundColor: 'var(--card)', color: 'var(--primary)'} : {color: 'var(--muted)'}}
                                 >简易</button>
                                 <button 
                                     onClick={() => setContentMode('comprehensive')}
-                                    className={`px-2 py-1.5 rounded text-xs font-bold transition-all ${contentMode === 'comprehensive' ? 'bg-white text-indigo-700 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
+                                    className={`px-2 py-1.5 rounded text-xs font-bold transition-all ${contentMode === 'comprehensive' ? 'shadow-sm' : ''}`}
+                                    style={contentMode === 'comprehensive' ? {backgroundColor: 'var(--card)', color: 'var(--primary)'} : {color: 'var(--muted)'}}
                                 >全面</button>
                             </div>
                             <button
                                 onClick={() => setIsRecitationMode(!isRecitationMode)}
-                                className={`p-2 rounded-full border transition-all ${isRecitationMode ? 'bg-amber-100 text-amber-700 border-amber-300' : 'bg-white text-gray-500 border-gray-300 hover:bg-gray-50'}`}
+                                className="p-2 rounded-full border transition-all"
+                                style={isRecitationMode ? {backgroundColor: 'var(--amber-bg)', color: 'var(--text)', borderColor: 'var(--amber-border)'} : {backgroundColor: 'var(--card)', color: 'var(--muted)', borderColor: 'var(--border)'}}
                                 title="背诵模式"
                             >
                                 <IconComponent name={isRecitationMode ? 'EyeOff' : 'Eye'} className="w-5 h-5" />
                             </button>
                             <button
                                 onClick={toggleFullscreen}
-                                className={`p-2 rounded-full border transition-all ${isFullscreen ? 'bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-white text-gray-500 border-gray-300 hover:bg-gray-50'}`}
+                                className="p-2 rounded-full border transition-all"
+                                style={isFullscreen ? {backgroundColor: 'rgba(99,102,241,0.15)', color: 'var(--primary)', borderColor: 'var(--primary)'} : {backgroundColor: 'var(--card)', color: 'var(--muted)', borderColor: 'var(--border)'}}
                                 title={isFullscreen ? "退出全屏 (ESC)" : "全屏显示"}
                             >
                                 <IconComponent name={isFullscreen ? 'Minimize' : 'Maximize'} className="w-5 h-5" />
                             </button>
+                            <button
+                                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                                className="p-2 rounded-full border transition-all"
+                                style={{backgroundColor: 'var(--card)', color: 'var(--muted)', borderColor: 'var(--border)'}}
+                                title="切换夜间模式"
+                            >
+                                <IconComponent name={theme === 'light' ? 'Moon' : 'Sun'} className="w-5 h-5" />
+                            </button>
                         </div>
                     </div>
                     
-                    <div className="bg-gray-50 border-b border-gray-100 px-4 py-1.5 flex justify-center gap-4 text-xs text-gray-500">
-                        <button onClick={expandAll} className="hover:text-indigo-600 flex items-center gap-1">
+                    <div className="border-b border-default px-4 py-1.5 flex justify-center gap-4 text-xs text-muted bg-card-sub">
+                        <button onClick={expandAll} className="hover:text-primary flex items-center gap-1">
                             <IconComponent name="ChevronDown" className="w-3 h-3" /> 展开全部
                         </button>
-                        <div className="w-px h-3 bg-gray-300 self-center"></div>
-                        <button onClick={collapseAll} className="hover:text-indigo-600 flex items-center gap-1">
+                        <div className="w-px h-3" style={{backgroundColor: 'var(--muted-2)'}}></div>
+                        <button onClick={collapseAll} className="hover:text-primary flex items-center gap-1">
                             <IconComponent name="ChevronRight" className="w-3 h-3" /> 收起全部
                         </button>
                     </div>
@@ -590,10 +634,10 @@
                 <main className="max-w-3xl mx-auto p-4 space-y-6">
                     {DATA.children.map(plate => {
                         const isPlateExpanded = expandedKeys.has(plate.id);
-                        const headerColorClass = plate.color === 'blue' ? 'bg-blue-600' : plate.color === 'green' ? 'bg-emerald-600' : 'bg-purple-600';
+                        const headerColorClass = plate.color === 'blue' ? 'bg-plate-blue' : plate.color === 'green' ? 'bg-plate-green' : 'bg-plate-purple';
 
                         return (
-                            <div key={plate.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300">
+                            <div key={plate.id} className="bg-card rounded-xl shadow-sm border border-default overflow-hidden transition-all duration-300">
                                 <div 
                                     className={`${headerColorClass} text-white px-4 py-3 flex items-center justify-between cursor-pointer sticky top-0 z-10 select-none`}
                                     onClick={() => toggleExpand(plate.id)}
@@ -611,7 +655,8 @@
                                 </div>
 
                                 {isPlateExpanded && (
-                                    <div className="p-3 bg-gray-50/50 space-y-3">
+                                    <div className="p-3" style={{backgroundColor: 'var(--card-sub)'}}>
+                                        <div className="space-y-3">
                                         {plate.children.map(principle => {
                                             const isCompleted = completedKeys.has(principle.id);
                                             const isPrincipleExpanded = expandedKeys.has(principle.id);
@@ -619,7 +664,8 @@
                                             return (
                                                 <div 
                                                     key={principle.id} 
-                                                    className={`bg-white rounded-lg border shadow-sm transition-all duration-200 overflow-hidden ${isCompleted ? 'opacity-50 border-gray-100 bg-gray-50 grayscale-[0.5]' : 'border-gray-200 hover:shadow-md'}`}
+                                                    className="bg-card rounded-lg border shadow-sm transition-all duration-200 overflow-hidden"
+                                                    style={isCompleted ? {opacity: 0.5, borderColor: 'var(--border)', backgroundColor: 'var(--card-sub)'} : {}}
                                                 >
                                                     <div 
                                                         className="p-3 flex items-start gap-3 cursor-pointer select-none"
@@ -627,23 +673,25 @@
                                                     >
                                                         <button
                                                             onClick={(e) => { e.stopPropagation(); toggleComplete(principle.id); }}
-                                                            className={`mt-0.5 p-1 rounded-full transition-all ${isCompleted ? 'text-emerald-500 bg-emerald-50' : 'text-gray-300 hover:text-gray-500 hover:bg-gray-100'}`}
+                                                            className="mt-0.5 p-1 rounded-full transition-all"
+                                                            style={isCompleted ? {color: 'var(--success)', backgroundColor: 'rgba(16,185,129,0.1)'} : {color: 'var(--muted)', backgroundColor: 'var(--card-sub)'}}
                                                         >
                                                             <IconComponent name={isCompleted ? 'CheckCircle2' : 'Circle'} className="w-5 h-5" />
                                                         </button>
 
                                                         <div className="flex-1 min-w-0">
                                                             <div className="flex justify-between items-start gap-2">
-                                                                <h3 className={`font-bold text-sm md:text-base leading-snug ${isCompleted ? 'text-gray-500 line-through decoration-gray-300' : 'text-gray-800'}`}>
+                                                                <h3 className={`font-bold text-sm md:text-base leading-snug ${isCompleted ? 'line-through decoration-muted text-muted' : ''}`} style={{color: isCompleted ? 'var(--muted)' : 'var(--text)'}}>
                                                                     {principle.topic}
                                                                 </h3>
                                                                 <div className="flex items-center gap-2 shrink-0">
                                                                     {principle.badge && !isCompleted && (
-                                                                        <span className="px-1.5 py-0.5 bg-red-50 text-red-600 text-xs font-bold rounded border border-red-100">
+                                                                        <span className="px-1.5 py-0.5 text-xs font-bold rounded border"
+                                                                            style={{backgroundColor: 'var(--badge-danger-bg)', color: 'var(--badge-danger-text)', borderColor: 'var(--badge-danger-bg)'}}>
                                                                             {principle.badge}
                                                                         </span>
                                                                     )}
-                                                                    <div className="text-gray-400">
+                                                                    <div className="text-muted">
                                                                         <IconComponent name={isPrincipleExpanded ? 'ChevronDown' : 'ChevronRight'} className="w-4 h-4" />
                                                                     </div>
                                                                 </div>
@@ -653,8 +701,9 @@
                                                             {(!isCompleted && (contentMode === 'simple' || !isPrincipleExpanded)) && (
                                                                 <div className="mt-2 flex flex-wrap gap-2">
                                                                     {principle.children.map(child => (
-                                                                        <div key={child.id} className="flex items-center text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded border border-gray-200">
-                                                                            <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${plate.color === 'blue' ? 'bg-blue-400' : plate.color === 'green' ? 'bg-emerald-400' : 'bg-purple-400'}`}></div>
+                                                                        <div key={child.id} className="flex items-center text-xs px-2 py-1 rounded border"
+                                                                            style={{color: 'var(--text-2)', backgroundColor: 'var(--card-sub)', borderColor: 'var(--border)'}}>
+                                                                            <div className="w-1.5 h-1.5 rounded-full mr-1.5" style={{backgroundColor: plate.color === 'blue' ? 'var(--plate-blue)' : plate.color === 'green' ? 'var(--plate-green)' : 'var(--plate-purple)'}}></div>
                                                                             {child.topic}
                                                                         </div>
                                                                     ))}
@@ -666,17 +715,19 @@
                                                     {/* Expanded Content */}
                                                     {isPrincipleExpanded && !isCompleted && (
                                                         <div className="px-4 pb-4 pt-1">
-                                                            <div className="h-px bg-gray-100 mb-3 mx-1"></div>
+                                                            <div className="h-px mb-3 mx-1" style={{backgroundColor: 'var(--border)'}}></div>
                                                             <div className="space-y-4">
                                                                 {principle.children.map(child => (
                                                                     <div key={child.id}>
-                                                                        <div className={`font-bold text-xs mb-1.5 flex items-center gap-1.5 ${plate.color === 'blue' ? 'text-blue-700' : plate.color === 'green' ? 'text-emerald-700' : 'text-purple-700'}`}>
+                                                                        <div className="font-bold text-xs mb-1.5 flex items-center gap-1.5"
+                                                                            style={{color: plate.color === 'blue' ? 'var(--plate-blue)' : plate.color === 'green' ? 'var(--plate-green)' : 'var(--plate-purple)'}}>
                                                                             <div className="w-1 h-3 rounded-full bg-current opacity-40"></div>
                                                                             {child.topic}
                                                                         </div>
                                                                         
                                                                         {contentMode === 'comprehensive' && (
-                                                                            <div className="pl-2.5 border-l-2 border-gray-100 ml-0.5 text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
+                                                                            <div className="pl-2.5 border-l-2 ml-0.5 text-sm leading-relaxed whitespace-pre-wrap"
+                                                                                style={{borderColor: 'var(--border)', color: 'var(--text-2)'}}>
                                                                                 {renderDetail(child.detail)}
                                                                             </div>
                                                                         )}
@@ -688,6 +739,7 @@
                                                 </div>
                                             );
                                         })}
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -696,8 +748,8 @@
                 </main>
                 
                 <div className="fixed bottom-6 right-6 z-40 hidden-mobile">
-                    <div className="bg-white/90 backdrop-blur border border-gray-200 rounded-full px-4 py-2 shadow-lg text-xs text-gray-500 flex items-center gap-2">
-                        <IconComponent name="CheckCircle2" className="w-4 h-4 text-emerald-500" />
+                    <div className="bg-glass backdrop-blur border border-default rounded-full px-4 py-2 shadow-lg text-xs flex items-center gap-2" style={{color: 'var(--muted)'}}>
+                        <IconComponent name="CheckCircle2" className="w-4 h-4" style={{color: 'var(--success)'}} />
                         <span>点击圆圈标记已背完</span>
                     </div>
                 </div>
@@ -709,4 +761,4 @@
     root.render(<App />);
 </script>
 </body>
-</html>
+    </html>
