@@ -18,6 +18,7 @@
             --primary-2: #2563eb;
             --success: #10b981;
             --danger: #dc2626;
+            --danger-soft: rgba(220,38,38,0.12);
             --amber-bg: #fef3c7;
             --amber-border: #fcd34d;
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -42,13 +43,14 @@
             --primary-2: #60a5fa;
             --success: #34d399;
             --danger: #f87171;
-            --amber-bg: rgba(251,191,36,0.15);
+            --danger-soft: rgba(248,113,113,0.16);
+            --amber-bg: rgba(251,191,36,0.18);
             --amber-border: #fbbf24;
             --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.4);
             --shadow-lg: 0 10px 30px -8px rgba(0,0,0,0.6),0 4px 10px -6px rgba(0,0,0,0.4);
             --glass: rgba(15,23,42,0.8);
             --badge-danger-bg: rgba(248,113,113,0.15);
-            --badge-danger-text: #fca5a5;
+            --badge-danger-text: #fecdd3;
             --plate-blue: #1d4ed8;
             --plate-green: #10b981;
             --plate-purple: #a855f7;
@@ -212,7 +214,7 @@
 
 <!-- React & Babel (Bundled) -->
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
 <script type="text/babel">
@@ -240,8 +242,6 @@
         Cpu: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M9 2v2"></path><path d="M15 2v2"></path><path d="M9 20v2"></path><path d="M15 20v2"></path><path d="M2 9h2"></path><path d="M2 15h2"></path><path d="M20 9h2"></path><path d="M20 15h2"></path></svg>,
         Maximize: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>,
         Minimize: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="10" y1="14" x2="3" y2="21"></line></svg>,
-        LayersIcon: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>,
-        ZapOn: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
         Sun: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>,
         Moon: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z"></path></svg>,
     };
@@ -449,10 +449,7 @@
         const [expandedKeys, setExpandedKeys] = useState(new Set(['plate1', 'p1']));
         const [completedKeys, setCompletedKeys] = useState(new Set());
         const [isFullscreen, setIsFullscreen] = useState(false);
-        const [theme, setTheme] = useState(() => {
-            const saved = localStorage.getItem('theme');
-            return saved || 'light';
-        });
+        const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
         useEffect(() => {
             document.documentElement.setAttribute('data-theme', theme);
@@ -463,55 +460,38 @@
         const completedCount = Array.from(completedKeys).filter(k => k.startsWith('p') && k.length <= 3).length;
         const progress = Math.round((completedCount / totalPrinciples) * 100);
 
-        // 全屏切换函数
         const toggleFullscreen = useCallback(() => {
             if (!document.fullscreenElement && !document.webkitFullscreenElement) {
                 const elem = document.documentElement;
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) {
-                    elem.webkitRequestFullscreen();
-                } else if (elem.mozRequestFullScreen) {
-                    elem.mozRequestFullScreen();
-                } else if (elem.msRequestFullscreen) {
-                    elem.msRequestFullscreen();
-                }
+                if (elem.requestFullscreen) elem.requestFullscreen();
+                else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+                else if (elem.mozRequestFullScreen) elem.mozRequestFullScreen();
+                else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
                 setIsFullscreen(true);
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+                else if (document.msExitFullscreen) document.msExitFullscreen();
                 setIsFullscreen(false);
             }
         }, []);
 
-        // 监听全屏状态变化
         useEffect(() => {
             const handleFullscreenChange = () => {
                 setIsFullscreen(!!document.fullscreenElement || !!document.webkitFullscreenElement);
             };
-
             document.addEventListener('fullscreenchange', handleFullscreenChange);
             document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-            
             return () => {
                 document.removeEventListener('fullscreenchange', handleFullscreenChange);
                 document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
             };
         }, []);
 
-        // ESC键退出全屏提示
         useEffect(() => {
             const handleKeyDown = (e) => {
-                if (e.key === 'Escape' && isFullscreen) {
-                    setIsFullscreen(false);
-                }
+                if (e.key === 'Escape' && isFullscreen) setIsFullscreen(false);
             };
             document.addEventListener('keydown', handleKeyDown);
             return () => document.removeEventListener('keydown', handleKeyDown);
@@ -540,9 +520,7 @@
             setExpandedKeys(all);
         };
 
-        const collapseAll = () => {
-            setExpandedKeys(new Set());
-        };
+        const collapseAll = () => setExpandedKeys(new Set());
 
         const renderDetail = (text) => {
             if (!text) return null;
@@ -761,4 +739,4 @@
     root.render(<App />);
 </script>
 </body>
-    </html>
+</html>
