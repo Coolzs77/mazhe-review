@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>马哲16大原理 · 终极复习</title>
+    <style>
+        /* --- Tailwind CSS Utilities (Inline for offline usage) --- */
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-font-smoothing: antialiased; }
+        button { cursor: pointer; border: none; background: none; padding: 0; font: inherit; color: inherit; }
+        
+        /* Layout */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .flex-1 { flex: 1; }
+        .gap-1 { gap: 0.25rem; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-3 { gap: 0.75rem; }
+        .gap-4 { gap: 1rem; }
+        .shrink-0 { flex-shrink: 0; }
+        .min-w-0 { min-width: 0; }
+        
+        /* Spacing */
+        .p-0\.5 { padding: 0.125rem; }
+        .p-1 { padding: 0.25rem; }
+        .p-1\.5 { padding: 0.375rem; }
+        .p-2 { padding: 0.5rem; }
+        .p-3 { padding: 0.75rem; }
+        .p-4 { padding: 1rem; }
+        .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .pb-4 { padding-bottom: 1rem; }
+        .pt-1 { padding-top: 0.25rem; }
+        .pt-2 { padding-top: 0.5rem; }
+        .mt-0\.5 { margin-top: 0.125rem; }
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mb-1\.5 { margin-bottom: 0.375rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .ml-0\.5 { margin-left: 0.125rem; }
+        .pl-2\.5 { padding-left: 0.625rem; }
+        
+        /* Sizing */
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+        .min-h-screen { min-height: 100vh; }
+        .max-w-3xl { max-width: 48rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .h-14 { height: 3.5rem; }
+        .h-1\.5 { height: 0.375rem; }
+        .w-20 { width: 5rem; }
+        .w-4 { width: 1rem; }
+        .h-4 { height: 1rem; }
+        .w-5 { width: 1.25rem; }
+        .h-5 { height: 1.25rem; }
+        .w-px { width: 1px; }
+        .h-px { height: 1px; }
+        .w-1 { width: 0.25rem; }
+        .h-3 { height: 0.75rem; }
+        
+        /* Text */
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-base { font-size: 1rem; line-height: 1.5rem; }
+        .font-bold { font-weight: 700; }
+        .font-medium { font-weight: 500; }
+        .text-white { color: #ffffff; }
+        .text-gray-300 { color: #d1d5db; }
+        .text-gray-400 { color: #9ca3af; }
+        .text-gray-500 { color: #6b7280; }
+        .text-gray-600 { color: #4b5563; }
+        .text-gray-800 { color: #1f2937; }
+        .text-gray-900 { color: #111827; }
+        .text-blue-700 { color: #1d4ed8; }
+        .text-emerald-500 { color: #10b981; }
+        .text-emerald-700 { color: #047857; }
+        .text-purple-700 { color: #7e22ce; }
+        .text-red-600 { color: #dc2626; }
+        .text-indigo-700 { color: #4338ca; }
+        .text-amber-700 { color: #b45309; }
+        .text-transparent { color: transparent; }
+        .whitespace-pre-wrap { white-space: pre-wrap; }
+        .line-through { text-decoration: line-through; }
+        .decoration-gray-300 { text-decoration-color: #d1d5db; }
+        
+        /* Visuals */
+        .bg-white { background-color: #ffffff; }
+        .bg-white\/20 { background-color: rgba(255, 255, 255, 0.2); }
+        .bg-white\/90 { background-color: rgba(255, 255, 255, 0.9); }
+        .bg-slate-50 { background-color: #f8fafc; }
+        .bg-gray-50 { background-color: #f9fafb; }
+        .bg-gray-100 { background-color: #f3f4f6; }
+        .bg-gray-200 { background-color: #e5e7eb; }
+        .bg-blue-600 { background-color: #2563eb; }
+        .bg-blue-400 { background-color: #60a5fa; }
+        .bg-emerald-600 { background-color: #059669; }
+        .bg-emerald-500 { background-color: #10b981; }
+        .bg-emerald-400 { background-color: #34d399; }
+        .bg-emerald-50 { background-color: #ecfdf5; }
+        .bg-purple-600 { background-color: #7c3aed; }
+        .bg-purple-400 { background-color: #c084fc; }
+        .bg-indigo-600 { background-color: #4f46e5; }
+        .bg-red-50 { background-color: #fef2f2; }
+        .bg-amber-100 { background-color: #fef3c7; }
+        .bg-current { background-color: currentColor; }
+        
+        .border { border-width: 1px; border-style: solid; }
+        .border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+        .border-l-2 { border-left-width: 2px; border-left-style: solid; }
+        .border-gray-100 { border-color: #f3f4f6; }
+        .border-gray-200 { border-color: #e5e7eb; }
+        .border-red-100 { border-color: #fee2e2; }
+        .border-amber-300 { border-color: #fcd34d; }
+        
+        .rounded { border-radius: 0.25rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-full { border-radius: 9999px; }
+        
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        
+        /* Logic & Animation */
+        .transition-all { transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+        .duration-500 { transition-duration: 500ms; }
+        .ease-out { transition-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+        .backdrop-blur { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .backdrop-blur-sm { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+        .cursor-pointer { cursor: pointer; }
+        .select-none { user-select: none; }
+        .overflow-hidden { overflow: hidden; }
+        .opacity-40 { opacity: 0.4; }
+        .opacity-50 { opacity: 0.5; }
+        .opacity-80 { opacity: 0.8; }
+        .grayscale-\[0\.5\] { filter: grayscale(0.5); }
+        
+        /* Recitation */
+        .recitation-hidden {
+            background-color: #e5e7eb;
+            color: transparent;
+            border-radius: 2px;
+            padding: 0 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .recitation-hidden:hover, .recitation-hidden:active {
+            background-color: transparent;
+            color: #dc2626;
+        }
+        .keyword-highlight {
+            font-weight: 700;
+            color: #dc2626;
+            margin: 0 2px;
+        }
+        
+        /* Sticky Header */
+        .sticky { position: sticky; top: 0; z-index: 50; }
+        .fixed { position: fixed; }
+        .bottom-6 { bottom: 1.5rem; }
+        .right-6 { right: 1.5rem; }
+        .z-10 { z-index: 10; }
+        .z-40 { z-index: 40; }
+        
+        /* Fullscreen styles */
+        .fullscreen-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999;
+            background-color: #f8fafc;
+            overflow-y: auto;
+        }
+        
+        @media (max-width: 640px) {
+            .hidden-mobile { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<!-- React & Babel (Bundled) -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script type="text/babel">
+    const { useState, useEffect, useCallback } = React;
+
+    // --- Inline Icons (No external dependency) ---
+    const Icons = {
+        BookOpen: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
+        ChevronRight: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="9 18 15 12 9 6"/></svg>,
+        ChevronDown: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="6 9 12 15 18 9"/></svg>,
+        CheckCircle2: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>,
+        Circle: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/></svg>,
+        Eye: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>,
+        EyeOff: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>,
+        Globe: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
+        Brain: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>,
+        Activity: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
+        Scale: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>,
+        GitBranch: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>,
+        Layers: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>,
+        RefreshCw: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>,
+        Search: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
+        Lightbulb: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-1 1.5-2.4 1.5-3.8 0-3.2-2.8-6-6.2-6-3.4 0-6 2.8-6 6 0 1.4.5 2.8 1.5 3.8.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>,
+        Zap: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+        Cpu: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>,
+        Maximize: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>,
+        Minimize: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
+    };
+
+    // --- Data Source ---
+    const DATA = {
+        id: 'root',
+        topic: '马哲十六大原理',
+        children: [
+            {
+                id: 'plate1',
+                topic: '一、唯物辩证法',
+                subtitle: '世界的联系与发展',
+                color: 'blue',
+                icon: 'Globe',
+                children: [
+                    {
+                        id: 'p1',
+                        topic: '1. 主观能动性与客观规律性',
+                        badge: '核心',
+                        icon: 'Brain',
+                        children: [
+                            { id: 'p1-1', topic: '辩证关系', detail: '① 尊重【客观规律】是正确发挥【主观能动性】的【前提】。\n② 只有发挥【主观能动性】，才能正确认识和利用【规律】。\n③ 【实践】是客观规律性与主观能动性【统一的基础】。' },
+                            { id: 'p1-2', topic: '发挥能动性的条件', detail: '① 前提：从【实际出发】。\n② 根本途径：【实践】。\n③ 依赖：一定的【物质条件】和【手段】。' }
+                        ]
+                    },
+                    {
+                        id: 'p2',
+                        topic: '2. 事物的普遍联系与发展',
+                        badge: '总特征',
+                        icon: 'Activity',
+                        children: [
+                            { id: 'p2-1', topic: '普遍联系', detail: '① 含义：事物内部及之间【相互影响】、【相互制约】、【相互作用】。\n② 特点：【客观性】、【普遍性】、【条件性】。\n③ 方法论：人可以【创造条件】化不利为有利，但必须【尊重规律】。' },
+                            { id: 'p2-2', topic: '永恒发展', detail: '① 实质：【新事物】的产生和【旧事物】的灭亡。\n② 新事物：合乎【历史方向】、符合【人民利益】。\n③ 关系：【扬弃】（继承合理，克服消极）。' }
+                        ]
+                    },
+                    {
+                        id: 'p3',
+                        topic: '3. 矛盾的同一性和斗争性',
+                        badge: '实质核心',
+                        icon: 'Scale',
+                        children: [
+                            { id: 'p3-1', topic: '基本属性', detail: '① 同一性：【相互依存】、【相互贯通】。\n② 斗争性：【相互排斥】、【相互分离】。' },
+                            { id: 'p3-2', topic: '辩证关系', detail: '① 【相辅相成】。\n② 斗争性【寓于】同一性之中。\n③ 矛盾双方既统一又斗争，【推动事物发展】。' },
+                            { id: 'p3-3', topic: '方法论', detail: '在斗争中【把握同一】，在同一中【把握斗争】；积极【创造条件】推动转化。' }
+                        ]
+                    },
+                    {
+                        id: 'p4',
+                        topic: '4. 矛盾普遍性与特殊性',
+                        icon: 'GitBranch',
+                        children: [
+                            { id: 'p4-1', topic: '辩证关系', detail: '① 普遍性（共性）【寓于】特殊性（个性）之中。\n② 个性【包含】共性。\n③ 任何事物是【共性】与【个性】的统一。' },
+                            { id: 'p4-2', topic: '方法论', detail: '① 【具体问题具体分析】（解决矛盾的【关键】）。\n② 坚持【两点论】与【重点论】的统一。\n③ 坚持【问题导向】。' }
+                        ]
+                    },
+                    {
+                        id: 'p5',
+                        topic: '5. 量变和质变',
+                        icon: 'Layers',
+                        children: [
+                            { id: 'p5-1', topic: '辩证关系', detail: '① 量变是质变的【必要准备】。\n② 质变是量变的【必然结果】。\n③ 【相互渗透】。' },
+                            { id: 'p5-2', topic: '方法论', detail: '① 平时：注重【量的积累】。\n② 关键时：【抓住机遇】，促成质变。\n③ 【适度原则】：防止"过"或"不及"。' }
+                        ]
+                    },
+                    {
+                        id: 'p6',
+                        topic: '6. 辩证否定观',
+                        icon: 'RefreshCw',
+                        children: [
+                            { id: 'p6-1', topic: '核心内容', detail: '① 实质：【扬弃】（既克服又保留）。\n② 态度：反对【肯定一切】或【否定一切】。\n③ 方法：在肯定中看到【否定】。' }
+                        ]
+                    },
+                    {
+                        id: 'p7',
+                        topic: '7. 五对基本范畴',
+                        badge: '环节',
+                        icon: 'Search',
+                        children: [
+                            { id: 'p7-1', topic: '内容与形式', detail: '【内容决定形式】，形式【反作用】于内容。' },
+                            { id: 'p7-2', topic: '本质与现象', detail: '本质【决定】现象，现象【表现】本质。需【透过现象】（去伪存真）把握本质。' },
+                            { id: 'p7-3', topic: '原因与结果', detail: '【凡事预则立】。消除不利原因，争取有利结果。' },
+                            { id: 'p7-4', topic: '必然与偶然', detail: '必然【寓于】偶然之中，【相互转化】。' },
+                            { id: 'p7-5', topic: '现实与可能', detail: '立足【现实】，争取好的【可能】转化为现实。' }
+                        ]
+                    },
+                    {
+                        id: 'p8',
+                        topic: '8. 科学思维方法',
+                        icon: 'Lightbulb',
+                        children: [
+                            { id: 'p8-1', topic: '辩证思维', detail: '【联系】、【发展】、【全面】、【系统】地观察事物。' },
+                            { id: 'p8-2', topic: '系统思维', detail: '【整体性】、【结构性】、【最优解】。' },
+                            { id: 'p8-3', topic: '创新思维', detail: '【破除迷信】，【超越陈规】。' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'plate2',
+                topic: '二、认识论',
+                subtitle: '实践与真理',
+                color: 'green',
+                icon: 'Brain',
+                children: [
+                    {
+                        id: 'p9',
+                        topic: '9. 实践的决定作用',
+                        badge: '基础',
+                        icon: 'Activity',
+                        children: [
+                            { id: 'p9-1', topic: '四大作用', detail: '① 认识的【来源】。\n② 发展的【动力】。\n③ 认识的【目的】。\n④ 检验真理的【唯一标准】。' }
+                        ]
+                    },
+                    {
+                        id: 'p10',
+                        topic: '10. 认识的本质与过程',
+                        icon: 'Zap',
+                        children: [
+                            { id: 'p10-1', topic: '本质', detail: '主体在实践基础上对客体的【能动反映】。' },
+                            { id: 'p10-2', topic: '两次飞跃', detail: '① 感性→理性（【去粗取精】）。\n② 理性→实践（【更重要】）。' },
+                            { id: 'p10-3', topic: '非理性因素', detail: '情感/意志等，起【激活】、【驱动】作用。' }
+                        ]
+                    },
+                    {
+                        id: 'p11',
+                        topic: '11. 实践与认识的辩证运动',
+                        icon: 'RefreshCw',
+                        children: [
+                            { id: 'p11-1', topic: '规律', detail: '实践-认识-再实践-再认识，【无限发展】。主观与客观是【具体的】、【历史的】统一。' }
+                        ]
+                    },
+                    {
+                        id: 'p12',
+                        topic: '12. 真理',
+                        icon: 'CheckCircle2',
+                        children: [
+                            { id: 'p12-1', topic: '基本属性', detail: '① 【客观性】。\n② 【绝对性】与【相对性】的统一。' },
+                            { id: 'p12-2', topic: '真理与谬误', detail: '【对立统一】，在一定条件下【相互转化】。' },
+                            { id: 'p12-3', topic: '检验标准', detail: '【实践】是唯一标准。具有【确定性】与【不确定性】。' }
+                        ]
+                    },
+                    {
+                        id: 'p13',
+                        topic: '13. 真理与价值',
+                        icon: 'Scale',
+                        children: [
+                            { id: 'p13-1', topic: '关系', detail: '成功的实践是【真理尺度】（合规律）与【价值尺度】（合目的）的统一。' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'plate3',
+                topic: '三、时代应用',
+                subtitle: '唯物史观与科技',
+                color: 'purple',
+                icon: 'Lightbulb',
+                children: [
+                    {
+                        id: 'p14',
+                        topic: '14. 坚持守正创新',
+                        badge: '热点',
+                        icon: 'GitBranch',
+                        children: [
+                            { id: 'p14-1', topic: '守正与创新', detail: '① 守正：坚持【实事求是】、真理性认识。【前提】和【基础】。\n② 创新：坚持【解放思想】，发现新规律。【目的】和【路径】。\n③ 深刻揭示了"变"与"不变"、【继承与发展】的辩证统一。' },
+                            { id: 'p14-2', topic: '良性互动', detail: '① 实践创新为理论创新提供【动力源泉】。\n② 理论创新为实践创新提供【行动指南】。\n③ 二者【相互激发】、【共同促进】。' }
+                        ]
+                    },
+                    {
+                        id: 'p15',
+                        topic: '15. 人与自然的关系',
+                        icon: 'Globe',
+                        children: [
+                            { id: 'p15-1', topic: '地位与基础', detail: '① 自然地理环境是人类生存发展的【永恒、必要条件】。\n② 自然是生活和生产的【自然基础】。' },
+                            { id: 'p15-2', topic: '物质变换', detail: '应当合理调节人与自然之间的【物质变换】，在【最适合人类本性】的条件下进行。' },
+                            { id: 'p15-3', topic: '能动与平衡', detail: '① 人在自然面前是【能动】的，但不能脱离【自然规律】。\n② 人与自然是【生命共同体】，要保持【动态平衡】。' }
+                        ]
+                    },
+                    {
+                        id: 'p16',
+                        topic: '16. 科学技术的社会作用',
+                        icon: 'Cpu',
+                        children: [
+                            { id: 'p16-1', topic: '双重作用', detail: '① 积极：【先进生产力】的重要标志。引起【生产方式】、【生活方式】、【思维方式】的变革。\n② 消极：在一定条件下可能带来消极后果（如生态、伦理问题）。' },
+                            { id: 'p16-2', topic: '影响与保障', detail: '① 科技作用受【社会制度】、利益关系（客观）及人们的观念（主观）的影响。\n② 正确运用首要是有合理的【社会制度】保障，始终坚持为【人类造福】。' },
+                            { id: 'p16-3', topic: '人工智能(AI)', detail: '① 态度：以【开放、客观】的态度观察和把握。\n② 对策：充分利用便利，加强对【不当应用风险】的研判和防范。\n③ 方向：引导和规范AI走向【有利于人类生存和发展】的方向。' }
+                        ]
+                    }
+                ]
+            }
+        ]
+    };
+
+    // --- Icon Component ---
+    const IconComponent = ({ name, className }) => {
+        const Icon = Icons[name];
+        return Icon ? <Icon className={className} /> : null;
+    };
+
+    // --- Main App ---
+    const App = () => {
+        const [contentMode, setContentMode] = useState('simple'); 
+        const [isRecitationMode, setIsRecitationMode] = useState(false);
+        const [expandedKeys, setExpandedKeys] = useState(new Set(['plate1', 'p1']));
+        const [completedKeys, setCompletedKeys] = useState(new Set());
+        const [isFullscreen, setIsFullscreen] = useState(false);
+
+        const totalPrinciples = 16;
+        const completedCount = Array.from(completedKeys).filter(k => k.startsWith('p') && k.length <= 3).length;
+        const progress = Math.round((completedCount / totalPrinciples) * 100);
+
+        // 全屏切换函数
+        const toggleFullscreen = useCallback(() => {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                // 进入全屏
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.mozRequestFullScreen) {
+                    elem.mozRequestFullScreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+                setIsFullscreen(true);
+            } else {
+                // 退出全屏
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                setIsFullscreen(false);
+            }
+        }, []);
+
+        // 监听全屏状态变化
+        useEffect(() => {
+            const handleFullscreenChange = () => {
+                setIsFullscreen(!!document.fullscreenElement || !!document.webkitFullscreenElement);
+            };
+
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+            
+            return () => {
+                document.removeEventListener('fullscreenchange', handleFullscreenChange);
+                document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+            };
+        }, []);
+
+        // ESC键退出全屏提示
+        useEffect(() => {
+            const handleKeyDown = (e) => {
+                if (e.key === 'Escape' && isFullscreen) {
+                    setIsFullscreen(false);
+                }
+            };
+            document.addEventListener('keydown', handleKeyDown);
+            return () => document.removeEventListener('keydown', handleKeyDown);
+        }, [isFullscreen]);
+
+        const toggleExpand = (id) => {
+            const newSet = new Set(expandedKeys);
+            if (newSet.has(id)) newSet.delete(id);
+            else newSet.add(id);
+            setExpandedKeys(newSet);
+        };
+
+        const toggleComplete = (id) => {
+            const newSet = new Set(completedKeys);
+            if (newSet.has(id)) newSet.delete(id);
+            else newSet.add(id);
+            setCompletedKeys(newSet);
+        };
+
+        const expandAll = () => {
+            const all = new Set(['root']);
+            DATA.children.forEach(c => {
+                all.add(c.id);
+                c.children.forEach(p => all.add(p.id));
+            });
+            setExpandedKeys(all);
+        };
+
+        const collapseAll = () => {
+            setExpandedKeys(new Set());
+        };
+
+        const renderDetail = (text) => {
+            if (!text) return null;
+            return text.split(/(【.*?】)/g).map((part, i) => {
+                if (part.startsWith('【') && part.endsWith('】')) {
+                    const cleanText = part.slice(1, -1);
+                    if (isRecitationMode) {
+                        return <span key={i} className="recitation-hidden" title="点击查看">{part}</span>;
+                    } else {
+                        return <span key={i} className="keyword-highlight">{cleanText}</span>;
+                    }
+                }
+                return part;
+            });
+        };
+
+        return (
+            <div className="min-h-screen bg-slate-50">
+                {/* Header */}
+                <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+                    <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="bg-indigo-600 p-1.5 rounded text-white shadow-sm">
+                                <IconComponent name="BookOpen" className="w-5 h-5" />
+                            </div>
+                            <div>
+                                <h1 className="font-bold text-gray-900 leading-none text-base">马哲16大原理</h1>
+                                <div className="flex items-center gap-2 mt-1">
+                                    <div className="h-1.5 w-20 bg-gray-100 rounded-full overflow-hidden">
+                                        <div className="h-full bg-emerald-500 duration-500 ease-out transition-all" style={{width: `${progress}%`}}></div>
+                                    </div>
+                                    <span className="text-xs text-gray-500 font-medium">{progress}% 已背</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <div className="flex bg-gray-100 p-0.5 rounded-lg border border-gray-200">
+                                <button 
+                                    onClick={() => setContentMode('simple')}
+                                    className={`px-2 py-1.5 rounded text-xs font-bold transition-all ${contentMode === 'simple' ? 'bg-white text-indigo-700 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
+                                >简易</button>
+                                <button 
+                                    onClick={() => setContentMode('comprehensive')}
+                                    className={`px-2 py-1.5 rounded text-xs font-bold transition-all ${contentMode === 'comprehensive' ? 'bg-white text-indigo-700 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
+                                >全面</button>
+                            </div>
+                            <button
+                                onClick={() => setIsRecitationMode(!isRecitationMode)}
+                                className={`p-2 rounded-full border transition-all ${isRecitationMode ? 'bg-amber-100 text-amber-700 border-amber-300' : 'bg-white text-gray-500 border-gray-300 hover:bg-gray-50'}`}
+                                title="背诵模式"
+                            >
+                                <IconComponent name={isRecitationMode ? 'EyeOff' : 'Eye'} className="w-5 h-5" />
+                            </button>
+                            <button
+                                onClick={toggleFullscreen}
+                                className={`p-2 rounded-full border transition-all ${isFullscreen ? 'bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-white text-gray-500 border-gray-300 hover:bg-gray-50'}`}
+                                title={isFullscreen ? "退出全屏 (ESC)" : "全屏显示"}
+                            >
+                                <IconComponent name={isFullscreen ? 'Minimize' : 'Maximize'} className="w-5 h-5" />
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 border-b border-gray-100 px-4 py-1.5 flex justify-center gap-4 text-xs text-gray-500">
+                        <button onClick={expandAll} className="hover:text-indigo-600 flex items-center gap-1">
+                            <IconComponent name="ChevronDown" className="w-3 h-3" /> 展开全部
+                        </button>
+                        <div className="w-px h-3 bg-gray-300 self-center"></div>
+                        <button onClick={collapseAll} className="hover:text-indigo-600 flex items-center gap-1">
+                            <IconComponent name="ChevronRight" className="w-3 h-3" /> 收起全部
+                        </button>
+                    </div>
+                </header>
+
+                {/* Main Content */}
+                <main className="max-w-3xl mx-auto p-4 space-y-6">
+                    {DATA.children.map(plate => {
+                        const isPlateExpanded = expandedKeys.has(plate.id);
+                        const headerColorClass = plate.color === 'blue' ? 'bg-blue-600' : plate.color === 'green' ? 'bg-emerald-600' : 'bg-purple-600';
+
+                        return (
+                            <div key={plate.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300">
+                                <div 
+                                    className={`${headerColorClass} text-white px-4 py-3 flex items-center justify-between cursor-pointer sticky top-0 z-10 select-none`}
+                                    onClick={() => toggleExpand(plate.id)}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className="bg-white/20 p-1.5 rounded-lg backdrop-blur-sm">
+                                            <IconComponent name={plate.icon} className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <h2 className="font-bold text-base md:text-lg leading-tight">{plate.topic}</h2>
+                                            <p className="text-xs opacity-80 mt-0.5">{plate.subtitle}</p>
+                                        </div>
+                                    </div>
+                                    <IconComponent name={isPlateExpanded ? 'ChevronDown' : 'ChevronRight'} className="w-5 h-5" />
+                                </div>
+
+                                {isPlateExpanded && (
+                                    <div className="p-3 bg-gray-50/50 space-y-3">
+                                        {plate.children.map(principle => {
+                                            const isCompleted = completedKeys.has(principle.id);
+                                            const isPrincipleExpanded = expandedKeys.has(principle.id);
+
+                                            return (
+                                                <div 
+                                                    key={principle.id} 
+                                                    className={`bg-white rounded-lg border shadow-sm transition-all duration-200 overflow-hidden ${isCompleted ? 'opacity-50 border-gray-100 bg-gray-50 grayscale-[0.5]' : 'border-gray-200 hover:shadow-md'}`}
+                                                >
+                                                    <div 
+                                                        className="p-3 flex items-start gap-3 cursor-pointer select-none"
+                                                        onClick={() => toggleExpand(principle.id)}
+                                                    >
+                                                        <button
+                                                            onClick={(e) => { e.stopPropagation(); toggleComplete(principle.id); }}
+                                                            className={`mt-0.5 p-1 rounded-full transition-all ${isCompleted ? 'text-emerald-500 bg-emerald-50' : 'text-gray-300 hover:text-gray-500 hover:bg-gray-100'}`}
+                                                        >
+                                                            <IconComponent name={isCompleted ? 'CheckCircle2' : 'Circle'} className="w-5 h-5" />
+                                                        </button>
+
+                                                        <div className="flex-1 min-w-0">
+                                                            <div className="flex justify-between items-start gap-2">
+                                                                <h3 className={`font-bold text-sm md:text-base leading-snug ${isCompleted ? 'text-gray-500 line-through decoration-gray-300' : 'text-gray-800'}`}>
+                                                                    {principle.topic}
+                                                                </h3>
+                                                                <div className="flex items-center gap-2 shrink-0">
+                                                                    {principle.badge && !isCompleted && (
+                                                                        <span className="px-1.5 py-0.5 bg-red-50 text-red-600 text-xs font-bold rounded border border-red-100">
+                                                                            {principle.badge}
+                                                                        </span>
+                                                                    )}
+                                                                    <div className="text-gray-400">
+                                                                        <IconComponent name={isPrincipleExpanded ? 'ChevronDown' : 'ChevronRight'} className="w-4 h-4" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            {/* Simple Mode Skeleton */}
+                                                            {(!isCompleted && (contentMode === 'simple' || !isPrincipleExpanded)) && (
+                                                                <div className="mt-2 flex flex-wrap gap-2">
+                                                                    {principle.children.map(child => (
+                                                                        <div key={child.id} className="flex items-center text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded border border-gray-200">
+                                                                            <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${plate.color === 'blue' ? 'bg-blue-400' : plate.color === 'green' ? 'bg-emerald-400' : 'bg-purple-400'}`}></div>
+                                                                            {child.topic}
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Expanded Content */}
+                                                    {isPrincipleExpanded && !isCompleted && (
+                                                        <div className="px-4 pb-4 pt-1">
+                                                            <div className="h-px bg-gray-100 mb-3 mx-1"></div>
+                                                            <div className="space-y-4">
+                                                                {principle.children.map(child => (
+                                                                    <div key={child.id}>
+                                                                        <div className={`font-bold text-xs mb-1.5 flex items-center gap-1.5 ${plate.color === 'blue' ? 'text-blue-700' : plate.color === 'green' ? 'text-emerald-700' : 'text-purple-700'}`}>
+                                                                            <div className="w-1 h-3 rounded-full bg-current opacity-40"></div>
+                                                                            {child.topic}
+                                                                        </div>
+                                                                        
+                                                                        {contentMode === 'comprehensive' && (
+                                                                            <div className="pl-2.5 border-l-2 border-gray-100 ml-0.5 text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
+                                                                                {renderDetail(child.detail)}
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+                </main>
+                
+                <div className="fixed bottom-6 right-6 z-40 hidden-mobile">
+                    <div className="bg-white/90 backdrop-blur border border-gray-200 rounded-full px-4 py-2 shadow-lg text-xs text-gray-500 flex items-center gap-2">
+                        <IconComponent name="CheckCircle2" className="w-4 h-4 text-emerald-500" />
+                        <span>点击圆圈标记已背完</span>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('app'));
+    root.render(<App />);
+</script>
+</body>
+</html>
